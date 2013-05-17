@@ -148,7 +148,6 @@ if __name__ == '__main__':
                 print "the begin time after the end time"
                 
             else:                
-                get_count_between_time(begin_time, end_time);
-            
+                get_count_between_time(begin_time, end_time)           
         except:           
             print "the time is error"

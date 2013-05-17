@@ -7,7 +7,6 @@ Created on May 17, 2013
 
 import os
 
-
 abspath = os.path.abspath(os.path.join(os.getcwd(),  __file__))
 configpath = "../test.log"   # 此路径为日志相对与此文件的相对路径
 filepath = abspath[0:abspath.rfind("/") + 1] + configpath
