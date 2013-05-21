@@ -15,8 +15,7 @@ filePath = config.filepath
 
 fpos = 0
 
-def get_lines_from_file():
-    
+def get_lines_from_file():    
     global fpos
     try:
         f = open(filePath, 'r')
