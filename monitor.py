@@ -15,8 +15,7 @@ filePath = config.filepath
 
 fpos = 0
 
-def get_lines_from_file():
-    
+def get_lines_from_file():    
     global fpos
     try:
         f = open(filePath, 'r')
@@ -30,12 +29,12 @@ def get_lines_from_file():
             sys.exit()
         
 def get_minute_from_line(line):
-    pos = line.find("/", 16, 26)
+    pos = line.find('/', 16, 26)
     minute = line[pos + 12:pos + 14]
     return minute
 
 def get_date_from_line(line):
-    pos = line.find("/", 16, 26)
+    pos = line.find('/', 16, 26)
     date_string = line[pos - 2:pos + 14]
     return date_string
  
@@ -43,7 +42,7 @@ def get_status_from_line(line):
     rpos = line.rfind('"');
     length = len(line)
     end = line[rpos + 2:length - 1]
-    status = end.split(" ")[0]
+    status = end.split(' ')[0]
     return status
 
 def cmp_string(str1, str2):
@@ -56,20 +55,20 @@ def string_logdate_to_urldate(log_time):
 # curl -d "tid=3553&dt=2012-10-24 18:12&data=100" http://10.10.3.43:9075/api/add-data 
 
 def format_parameter(url_date, data, tid):
-    string_desc = "tid=" +str(tid) + "&"
-    string_desc = string_desc + "dt=" + url_date +"&"
-    string_desc = string_desc + "data=" +data
+    string_desc = 'tid=' +str(tid) + '&'
+    string_desc = string_desc + 'dt=' + url_date + '&'
+    string_desc = string_desc + 'data=' +data
     return string_desc
 
 def send_data_print(log_date, count):
     urldate = string_logdate_to_urldate(log_date)
-    print urldate+" "+str(count)
+    print urldate+' '+str(count)
   
 def send_data(log_date, count):
     urldate = string_logdate_to_urldate(log_date)
     paramter_format=format_parameter(urldate, count, config.tid)
     c = pycurl.Curl()
-    c.setopt(pycurl.URL, config.url + "?" + paramter_format)
+    c.setopt(pycurl.URL, config.url + '?' + paramter_format)
     
     # 最大重定向次数,可以预防重定向陷阱    
     c.setopt(pycurl.MAXREDIRS, 5)
@@ -84,10 +83,10 @@ def send_data(log_date, count):
     
 if __name__ == '__main__':
     count = 0
-    minuteNow = ""
-    minute = ""
+    minuteNow = None
+    minute = None
     fpos = 0
-    log_date = ""
+    log_date = None
 
     while True:
         lines = get_lines_from_file()
@@ -101,11 +100,11 @@ if __name__ == '__main__':
             minute = get_minute_from_line(line)
             status = get_status_from_line(line)
             
-            if len(minuteNow) == 0 or cmp("", minuteNow) == 0:
+            if len(minuteNow) == 0 or cmp('', minuteNow) == 0:
                 minuteNow = get_minute_from_line(line)
                 log_date = get_date_from_line(line)
                 
-            if cmp_string(minuteNow, minute) == 0 and cmp_string(status,"200") == 0:
+            if cmp_string(minuteNow, minute) == 0 and cmp_string(status,'200') == 0:
                 count = count + 1
                 
             if cmp(minuteNow,minute) != 0:

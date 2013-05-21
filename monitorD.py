@@ -23,12 +23,12 @@ def get_lines_from_file():
             sys.exit()
         
 def get_minute_from_line(line):
-    pos = line.find("/", 16, 26)
+    pos = line.find('/', 16, 26)
     minute = line[pos + 12:pos + 14]
     return minute
 
 def get_date_from_line(line):
-    pos = line.find("/", 16, 26)
+    pos = line.find('/', 16, 26)
     date = line[pos - 2:pos + 14]
     return date
  
@@ -36,7 +36,7 @@ def get_status_from_line(line):
     rpos = line.rfind('"');
     length = len(line)
     end = line[rpos + 2:length - 1]
-    status = end.split(" ")[0]
+    status = end.split(' ')[0]
     return status
 
 def cmp_string(str1, str2):
@@ -56,7 +56,7 @@ def get_count_time(time_desc):
         log_date = string_logdate_to_datetime(get_date_from_line(line))
         status = get_status_from_line(line)
         
-        if log_date == time_desc and cmp_string(status,"200") == 0:
+        if log_date == time_desc and cmp_string(status,'200') == 0:
             count = count + 1
             flag = 1
         
@@ -82,7 +82,7 @@ def get_count_between_time(begin_time, end_time):
         
         if begin_time <= log_date and log_date <= end_time:
             
-            if date_now == log_date and cmp(status, "200")==0:
+            if date_now == log_date and cmp(status, '200')==0:
                 count = count + 1
                 
             else:
@@ -104,18 +104,18 @@ def get_count_between_time(begin_time, end_time):
 # curl -d "tid=3553&dt=2012-10-24 18:12&data=100" http://10.10.3.43:9075/api/add-data 
 
 def format_parameter(url_date, data, tid):
-    string_desc = "tid=" +str(tid) + "&"
-    string_desc = string_desc + "dt=" + url_date +"&"
-    string_desc = string_desc + "data=" +data
+    string_desc = 'tid=' + str(tid) + '&'
+    string_desc = string_desc + 'dt=' + url_date + '&'
+    string_desc = string_desc + 'data=' +data
     return string_desc
 
 def send_data_print(date, count):
-    print date+" "+str(count)
+    print date+' '+str(count)
 
 def send_data(url_date, count):
     paramter_format=format_parameter(url_date, count, config.tid)
     c = pycurl.Curl()
-    c.setopt(pycurl.URL, config.url + "?" + paramter_format)
+    c.setopt(pycurl.URL, config.url + '?' + paramter_format)
      
     # 最大重定向次数,可以预防重定向陷阱    
     c.setopt(pycurl.MAXREDIRS, 5)

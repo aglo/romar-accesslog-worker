@@ -11,8 +11,10 @@ import random
 import config
 
 ip = '"GET /items/similars?item=00000246580338385&limit=10 HTTP/1.1"'
+
 time_sleep = (0.1, 0.2, 1, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 0.05)
 length = len(time_sleep) - 1
+
 filePath = config.filepath
 
 while True:
