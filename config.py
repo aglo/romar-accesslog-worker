@@ -17,6 +17,6 @@ config_date_format = '%Y%m%d%H%M'   # 命令行接收的时间格式
 
 url = 'http://10.10.3.43:9075/api/add-data' 
 
-tid=3553
+tid = 3553
 
-
+encoding_charset = 'utf8'
