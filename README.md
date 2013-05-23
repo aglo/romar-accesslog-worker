@@ -13,7 +13,7 @@ romar-accesslog-worker
 2. 如果在测试环境，我们准备了一个测试脚本来生成模拟数据
 
 ```
-$ python -m test/fake
+$ python -m test.fake
 ```
 
 ### monitord
@@ -30,7 +30,7 @@ python monitord.py
 nohup python monitord.py &
 ```
 
-输出时间和统计结果 输出结果格式 "%Y%m%d %H:%M {$num}"，例："2013-05-20 14:27 61"  
+输出时间和统计结果 输出结果格式 "%Y-%m-%d %H:%M {$num}"，例："2013-05-20 14:27 61"  
 
 ### monitor
 
@@ -47,5 +47,5 @@ python monitor.py  starttime endtime
 ```
 starttime与endtime格式相同。将输出指定时间段内每分钟的访问次数。
 
-以上的结果输出格式均与monitord相同。
+以上的结果输出格式均与monitod相同。
 
