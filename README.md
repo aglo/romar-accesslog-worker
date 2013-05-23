@@ -2,41 +2,50 @@ romar-accesslog-worker
 ======================
 
 定时分析romar进程产生的accesslog
+
 ## 功能需求
 * 对于给定日志定时抓取并且进行分析和统计
 * 把统计的结果发送给其他应用
 
 ## Usage
 
-##### 参数配置
+1. 修改`config.py`中的`configpath`变量，此路径为日志文件路径
+2. 如果在测试环境，我们准备了一个测试脚本来生成模拟数据
 
-* 安装pycurl模块
-* 在config.py修改configpath路径，此路径为日志相对与此文件的相对路径
+```
+$ python -m test/fake
+```
 
-```python
+### monitord
+
+```
 python monitord.py
 ```
 
-* 输出
+无需参数启动，从下一分钟开始统计。
 
-从启动时间的下一分钟开始统计
+生产环境中我们将作为守护进程启动
 
-输出时间和统计结果 输出结果格式 "%Y%m%d %H:%M 统计结果"，例："2013-05-20 14:27 61"  
-
-```python
-python monitor.py  time  |  python monitor.py starttime  endtime
+```
+nohup python monitord.py &
 ```
 
-* 运行
+输出时间和统计结果 输出结果格式 "%Y%m%d %H:%M {$num}"，例："2013-05-20 14:27 61"  
 
-运行'python monitorD.py time' 输出这分钟的统计值 
+### monitor
 
-运行'python monitorD.py starttime endtime' 输出这段时间间隔的内的每一分钟统计结果
+与monitord不同，此脚本用来统计指定时间或时间段内的访问数量，所以至少将需要一个参数。
 
-统计结果包括starttime和endtime这两个时间段，如果某分钟没数据则不输出
+```
+python monitor.py  time 
+```
 
-**时间格式**："%Y%m%d%H%m"  例如要输入时间为："2013-05-20 14:27"，输入'201305201427'即可 
+time的格式指定为`%Y%m%d%H%m`，例："201305201427"。将输出指定的该分钟访问次数。
 
-* 输出
+```
+python monitor.py  starttime endtime 
+```
+starttime与endtime格式相同。将输出指定时间段内每分钟的访问次数。
 
-直接在命令行输出时间和统计结果 输出结果格式 “%Y%m%d %H:%M 统计结果”，例："2013-05-20 14:27  61" 
+以上的结果输出格式均与monitord相同。
+
