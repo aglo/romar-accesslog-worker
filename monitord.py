@@ -13,12 +13,13 @@ import os
 import common
 
 fpos = os.stat(config.filepath)[6]
+f = open(config.filepath, 'r')
 
 def get_lines_from_file():
     
     global fpos
     try:
-        f = open(config.filepath, 'r')
+        
         f.seek(fpos)
         lines = f.readlines()
         fpos = f.tell()
